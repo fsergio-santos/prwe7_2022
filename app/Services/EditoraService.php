@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Editora;
+use Carbon\Carbon;
 
 class EditoraService {
 
@@ -19,8 +20,15 @@ class EditoraService {
        ]);
     } 
 
-    
-    public function create(){
+    public function create($data){
+        
+        $data['data_cadastro'] = Carbon::createFromFormat('d/m/Y',$data['data_cadastro'])->format('Y-m-d');
+
+        $this->repository->create($data);
+        
+        return([
+            'success'=> 'Registro cadastrado sucesso!'
+        ]);
 
     }
     

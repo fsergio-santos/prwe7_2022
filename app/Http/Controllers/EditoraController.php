@@ -18,10 +18,22 @@ class EditoraController extends Controller {
         return view('editora.index',[
            'dados'=>$dados['dados']
         ]);
-    } 
+     } 
+
+     public function new(){
+          return view('editora.incluir');
+     }
+
+
 
      
-     public function create(){
+     public function create(Request $request){
+        $data = $request->all();
+        $mensagem = $this->editora_service->create($data);  
+        return([
+             'success'=>$mensagem['success'],
+             view('editora.index'),
+        ]);
 
      }
      
@@ -31,9 +43,15 @@ class EditoraController extends Controller {
 
 
      public function show(){
-
+         return view('editora.alterar');
      }
 
-
+     
+     public function cancelar(){
+          $dados = $this->editoraService->index();
+          return view('editora.index',[
+             'dados'=>$dados['dados']
+          ]);
+     }
 
 }

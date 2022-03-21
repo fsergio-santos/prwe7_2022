@@ -21,6 +21,7 @@ class CreateEditorasTable extends Migration
         });
     }
 
+    
     /**
      * Reverse the migrations.
      *

@@ -53,7 +53,7 @@
                             <td data-title="Nome">{{ $dado->nome }}</td>
                             <td data-title="Ações" style="text-align:center">
                               <a class="btn btn-info btn-sm"
-                                 href="#"><i class="fa fa-pencil"></i>
+                                 href="{{ url('/editora/alterar')}}"><i class="fa fa-pencil"></i>
                               </a>
                               <a class="btn btn-danger btn-sm" href="#">
                                  <i class="fa fa-trash"></i>
@@ -65,7 +65,7 @@
                   </tbody>  
 
                 </table>
-                <a class="btn btn-success btn-lg" href="#">
+                <a class="btn btn-success btn-lg" href="{{ url('/editora/incluir')}}">
                    Incluir Nova Editora<i class="fa fa-plus-circle"></i></a>   
             </div>
            </div>  
