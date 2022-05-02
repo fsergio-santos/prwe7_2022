@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Editora;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class EditoraService {
 
@@ -14,15 +15,36 @@ class EditoraService {
     }
 
     public function index(){
-       $dados = $this->repository->all();
+       $dados = $this->repository->paginate(5);
        return ([
            'dados'=>$dados,
        ]);
     } 
 
+    public function buscaPaginada($page, $pageSize, $dir, $props ){
+        
+        $query = DB::table('editoras')->select('*')->orderBy($props,$dir);
+
+        $total = $query->count();
+        
+        $registros = $query->offset(($page-1) * $pageSize)->limit($pageSize)->get();
+
+        return ([
+            'registros'=>$registros,
+            'currentPage'=>$page,
+            'pageSize'=>$pageSize,
+            'lastPage'=>ceil($total/$pageSize)
+        ]);
+
+    }
+
+
+
+
     public function create($data){
         
-        $data['data_cadastro'] = Carbon::createFromFormat('d/m/Y',$data['data_cadastro'])->format('Y-m-d');
+        
+        //$data['data_cadastro'] = Carbon::createFromFormat('d/m/Y',$data['data_cadastro'])->format('Y-m-d');
 
         $this->repository->create($data);
         
@@ -32,13 +54,31 @@ class EditoraService {
 
     }
     
-    public function store(){
-
+    public function store($data, $id){
+        $registro = $this->repository->find($id);
+        $registro->update($data);
+        return([
+            'success'=> 'Registro alterado com sucesso!'
+        ]);   
     }
 
+    public function show($id){
+        $registro = $this->repository->find($id);
+        return ([
+            'registro'=>$registro,
+        ]);
+    }
 
-    public function show(){
-        
+    public function delete($id){
+        $registro = $this->repository->find($id);
+        return ([
+            'registro'=>$registro,
+        ]);
+    }
+
+    public function excluir($id){
+        $registro = $this->repository->find($id);
+        $registro->delete();
     }
 
 

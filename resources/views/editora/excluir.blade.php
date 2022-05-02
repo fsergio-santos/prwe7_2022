@@ -14,12 +14,12 @@
     <div>
     <div class="tile">
         <div class="tile-body">
-            <form action="{{ url('/editora/alterar', $registro->id )}}" method="POST">
+            <form action="{{ url('/editora/excluir', $registro->id )}}" method="POST">
                @csrf 
                @include('editora.__form')
                <div class="center">
-                   <button type="submit" class="btn btn-primary btn-lg">Alterar Dados da Editora</button>
-                   <a class="btn btn-secondary btn-lg" href="{{ url('/editora/cancelar')}}">Cancelar Alteração da Editora</a>
+                   <button type="submit" class="btn btn-danger btn-lg">Excluir Editora</button>
+                   <a class="btn btn-secondary btn-lg" href="{{ url('/editora/cancelar')}}">Cancelar Exclusão da Editora</a>
                </div>
             </form>
         </div>

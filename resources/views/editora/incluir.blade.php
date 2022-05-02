@@ -14,7 +14,8 @@
     <div>
     <div class="tile">
         <div class="tile-body">
-            <form action="{{ url(/editora/salvar)}}" method="POST">
+            <form action="{{ url('/editora/salvar')}}" method="POST">
+               @csrf 
                @include('editora.__form')
                <div class="center">
                    <button type="submit" class="btn btn-primary btn-lg">Salvar Dados da Editora</button>

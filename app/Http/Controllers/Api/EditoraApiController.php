@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Services\EditoraService;
+use App\Http\Controllers\Controller;
 
-class EditoraController extends Controller {
+class EditoraApiController extends Controller {
     
      private $editoraService;
 
@@ -13,12 +14,16 @@ class EditoraController extends Controller {
           $this->editoraService = $editoraService;   
      }
 
-     public function index(){
-          $dados = $this->editoraService->index();
-          return view('editora.index',[
-             'dados'=>$dados['dados'],
-          ]);
-       } 
+     public function buscaPaginada(Request $request ){
+          
+         $page     = $request->get('page') ? $request->get('page') : 1;  
+         $pageSize = $request->get('pageSize') ? $request->get('pageSize') : 5;
+         $dir      = $request->get('dir') ? $request->get('dir') : 'asc';
+         $props    = $request->get('props') ? $request->get('props') : 'id';
+    
+         $dados = $this->editoraService->buscaPaginada($page,$pageSize, $dir, $props);
+         return response()->json($dados);
+     } 
   
              
        public function create(Request $request){
