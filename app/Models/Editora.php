@@ -9,6 +9,8 @@ class Editora extends Model
 {
     use HasFactory;
 
+    protected $table='editoras';
+
     protected $fillable = [
         'nome',
         'data_cadastro'

@@ -5,13 +5,15 @@ namespace App\Services;
 use App\Models\Editora;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\Console\Output\ConsoleOutput;
 
 class EditoraService {
 
     private $repository;
 
-    public function __construct(Editora $editora){
+    public function __construct(Editora $editora, ConsoleOutput $out){
         $this->repository = $editora;
+        $this->out = $out;
     }
 
     public function index(){
@@ -21,10 +23,13 @@ class EditoraService {
        ]);
     } 
 
-    public function buscaPaginada($page, $pageSize, $dir, $props ){
-        
-        $query = DB::table('editoras')->select('*')->orderBy($props,$dir);
-
+    public function buscaPaginada($page, $pageSize, $dir, $props, $search ){
+        $this->out->write($search);
+        if (empty($search)){
+            $query = DB::table('editoras')->select('*')->orderBy($props,$dir);
+        } else {
+            $query = DB::table('editoras')->where($props, 'LIKE','%'.$search.'%')->orderBy($props,$dir);
+        }
         $total = $query->count();
         
         $registros = $query->offset(($page-1) * $pageSize)->limit($pageSize)->get();

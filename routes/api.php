@@ -20,7 +20,11 @@ use App\Http\Controllers\Api\EditoraApiController;
 |
 */
 
+Route::middleware(['throttle:api'])->group(function () {
+   
+
 Route::get('/editora/listar',[EditoraApiController::class,'buscaPaginada']);
+
 Route::get('/editora/incluir',[EditoraApiController::class,'new']);
 Route::get('/editora/alterar/{id}',[EditoraApiController::class,'show']);
 Route::get('/editora/excluir/{id}',[EditoraApiController::class,'delete']);
@@ -30,5 +34,5 @@ Route::post('/editora/salvar',[EditoraApiController::class,'create']);
 Route::post('/editora/alterar/{id}',[EditoraApiController::class,'store']);
 Route::post('/editora/excluir/{id}',[EditoraApiController::class,'excluir']);
 
-
+});
 

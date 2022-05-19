@@ -14,6 +14,7 @@ class EditoraController extends Controller {
      }
 
      public function index(){
+     
           $dados = $this->editoraService->index();
           return view('editora.index',[
              'dados'=>$dados['dados'],

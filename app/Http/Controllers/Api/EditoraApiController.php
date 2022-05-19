@@ -14,14 +14,16 @@ class EditoraApiController extends Controller {
           $this->editoraService = $editoraService;   
      }
 
-     public function buscaPaginada(Request $request ){
+     public function buscaPaginada( Request $request ){
           
          $page     = $request->get('page') ? $request->get('page') : 1;  
          $pageSize = $request->get('pageSize') ? $request->get('pageSize') : 5;
          $dir      = $request->get('dir') ? $request->get('dir') : 'asc';
          $props    = $request->get('props') ? $request->get('props') : 'id';
-    
-         $dados = $this->editoraService->buscaPaginada($page,$pageSize, $dir, $props);
+         $search   = $request->get('nome') ? $request->get('nome') : ""; 
+  
+
+         $dados = $this->editoraService->buscaPaginada($page,$pageSize, $dir, $props, $search);
          return response()->json($dados);
      } 
   
