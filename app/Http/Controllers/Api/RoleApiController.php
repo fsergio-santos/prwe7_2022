@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\Services\EditoraService;
+use App\Services\RoleService;
 use App\Http\Controllers\Controller;
 
-class EditoraApiController extends Controller {
-    
-     private $service;
+class RoleApiController extends Controller {
 
-     public function __construct(EditoraService $editoraService){
-          $this->service = $editoraService;   
+    private $service;
+
+     public function __construct(RoleService $roleService){
+          $this->service = $roleService;   
      }
 
      public function buscaPaginada( Request $request ){
@@ -32,19 +32,16 @@ class EditoraApiController extends Controller {
           $data = $request->all();
           $mensagem = $this->service->create($data);  
           return response()->json($mensagem);
-  
        }
        
        public function store(Request $request, $id){
             $data = $request->all();
             $mensagem = $this->service->store($data, $id);
             return response()->json($mensagem);
-  
        }
   
   
        public function show($id){
-         
            $registro = $this->service->show($id); 
            return response()->json($registro);
        }
@@ -52,14 +49,6 @@ class EditoraApiController extends Controller {
        public function delete($id){
             $registro = $this->service->delete($id); 
             return response()->json($registro);
-        }
-  
-        public function excluir($id){
-            $registro = $this->service->excluir($id); 
-            return response()->json("registro excluído com sucesso!");
-        }
-  
-       
-       
+       }
 
 }

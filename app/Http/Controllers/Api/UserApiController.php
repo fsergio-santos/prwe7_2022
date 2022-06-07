@@ -3,15 +3,18 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\Services\EditoraService;
+use App\Services\UserService;
 use App\Http\Controllers\Controller;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use App\Models\User;
 
-class EditoraApiController extends Controller {
+class UserApiController extends Controller {
     
      private $service;
 
-     public function __construct(EditoraService $editoraService){
-          $this->service = $editoraService;   
+     public function __construct(UserService $userService, ConsoleOutput $out){
+          $this->service = $userService;   
+          $this->out = $out;
      }
 
      public function buscaPaginada( Request $request ){
@@ -29,8 +32,9 @@ class EditoraApiController extends Controller {
   
              
        public function create(Request $request){
-          $data = $request->all();
-          $mensagem = $this->service->create($data);  
+          $data = $request->json()->all();
+          $roles = $data['roles'];
+          $mensagem = $this->service->create($data, $roles);
           return response()->json($mensagem);
   
        }
@@ -39,12 +43,10 @@ class EditoraApiController extends Controller {
             $data = $request->all();
             $mensagem = $this->service->store($data, $id);
             return response()->json($mensagem);
-  
        }
   
   
        public function show($id){
-         
            $registro = $this->service->show($id); 
            return response()->json($registro);
        }
